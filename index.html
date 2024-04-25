@@ -25,6 +25,15 @@
     </style>
   </head>
   <body>
+    <div>
+      <input type="text" id="textInput" />
+      <button onclick="speakText()">Speak</button>
+    </div>
+    <!-- <div>
+      <label for="englishInput">Enter text in English:</label>
+      <input type="text" id="englishInput" />
+      <button onclick="translateAndSpeak()">Translate & Speak</button>
+    </div> -->
     <div class="items">
       <div class="item">
         <img src="item1.jpg" alt="Item 1" />
@@ -50,7 +59,44 @@
       <h2>Shopping Cart</h2>
       <div class="cart-items"></div>
     </div>
-    <script></script>
+
+    <script>
+      function speakText() {
+        var textInput = document.getElementById("textInput").value;
+        const utterance = new SpeechSynthesisUtterance(textInput);
+        window.speechSynthesis.speak(utterance);
+      }
+    </script>
+    <!-- <script>
+      async function translateAndSpeak() {
+        const englishInput = document.getElementById("englishInput").value;
+        const apiKey = "YOUR_GOOGLE_TRANSLATE_API_KEY";
+        const targetLanguage = "hi"; // Hindi language code
+
+        // Fetch translation using Google Translate API
+        const response = await fetch(
+          `https://translation.googleapis.com/language/translate/v2?key=${apiKey}`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              q: englishInput,
+              target: targetLanguage,
+            }),
+          }
+        );
+
+        const data = await response.json();
+        const hindiText = data.data.translations[0].translatedText;
+
+        // Speak the translated text using SpeechSynthesis API
+        const utterance = new SpeechSynthesisUtterance(hindiText);
+        utterance.lang = "hi-IN"; // Set language to Hindi (India)
+        window.speechSynthesis.speak(utterance);
+      }
+    </script> -->
 
     <script>
       const addToCartButtons = document.querySelectorAll(".add-to-cart");
